@@ -5,14 +5,15 @@ const   express         = require('express'),
         bodyParser      = require('body-parser'),
         errorHandler    = require('./handlers/error'),
         authRoutes      = require('./routes/auth'),
-        messageRoutes   = require('./routes/messages');
+        messageRoutes   = require('./routes/messages'),
+        { authorizeUser, loginRequired } = require('./middleware/auth');
 
 app.use(cors());
 app.use(bodyParser.json());
 
 //routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users/:id/messages', messageRoutes);
+app.use('/api/users/:id/messages', loginRequired, authorizeUser, messageRoutes);
 
 //error handling
 app.use(function(req, res, next) {

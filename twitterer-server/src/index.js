@@ -6,7 +6,8 @@ const   express         = require('express'),
         errorHandler    = require('./handlers/error'),
         authRoutes      = require('./routes/auth'),
         messageRoutes   = require('./routes/messages'),
-        { authorizeUser, loginRequired } = require('./middleware/auth');
+        { authorizeUser, loginRequired } = require('./middleware/auth'),
+        { getAllMessages } = require('./handlers/messages');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 //routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users/:id/messages', loginRequired, authorizeUser, messageRoutes);
+app.get('/api/messages', loginRequired, getAllMessages);
 
 //error handling
 app.use(function(req, res, next) {

@@ -2,15 +2,18 @@ const mongoose = require('mongoose');
 const User = require('./user');
 
 const messageSchema = new mongoose.Schema({
-    text: {
-        type: String,
-        required: true,
-        maxLength: 160
-    },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+  text: {
+      type: String,
+      required: true,
+      maxLength: 160
+  },
+  user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+  },
+},
+{
+  timestamps: true
 });
 
 //when removing a message the reference in the messages array of the user also needs to be removed

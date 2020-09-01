@@ -7,7 +7,7 @@ export interface State {
 
 export interface Action {
     type: string,
-    user: Object
+    user: object
 }
 
 const DEFAULT_STATE: State = {

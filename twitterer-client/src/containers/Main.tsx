@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, withRouter, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Homepage from '../components/Homepage';
+import AuthForm from '../components/AuthForm';
 
 //if user is authenticated display timeline, else show login screen
 //switch for multiple routes
@@ -10,8 +11,29 @@ const Main = (props: Object) => {
     return (
         <div className="container">
             <Switch>
-                <Route exact path="/" render={ (props: Object) => <Homepage {...props}/> }>
-
+                <Route  exact path="/" 
+                        render={ (props: Object) => <Homepage {...props}/> }>
+                </Route>
+                <Route  exact path="/signin"
+                        render={ (props: Object) => {
+                            return (
+                                <AuthForm   {...props} 
+                                            btn="Log in" 
+                                            heading="Welcome back"/>
+                            )
+                        }}
+                >
+                </Route>
+                <Route  exact path="/signup"
+                        render={ (props: Object) => {
+                            return (
+                                <AuthForm   {...props} 
+                                            signup
+                                            btn="Sign me up" 
+                                            heading="Join Twitterer today."/>
+                            )
+                        }}
+                >
                 </Route>
             </Switch>
         </div>

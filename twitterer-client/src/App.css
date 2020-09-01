@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+/*  ############# 
+    Global styles 
+    ############# */
+body {
+  background-color: #e6ecf0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+img {
+  display: inline-block;
+  height: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/*  ############# 
+    Navbar styles 
+    ############# 
+*/
+
+.navbar {
+  margin-bottom: 1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar a {
+  font-weight: bold;
+  color: white;
+}
+
+.navbar a:hover {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.navbar-brand > img {
+  width: 20px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+
+ul.nav.navbar-nav li {
+  margin: 0 0.5rem;
+}
+
+.onboarding > .navbar {
+  background-image: url("./images/nav-bg.png");
+  background-size: 100% 100%;
+}
+
+/*  ############### 
+    Homepage styles 
+    ############### 
+*/
+
+.home-hero {
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  
+  text-align: center;
+  padding: 1rem;
+  z-index: -1;
+  
+  background-image: url("./images/signed-out-home.jpg");
+  background-position: center center;
+  background-size: cover;
+  
+  color: #fff;
+  text-shadow: 0 0 8px #66757f;
 }

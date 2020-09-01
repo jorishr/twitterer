@@ -5,7 +5,7 @@ export interface Action {
     error: string,
 }
 
-export default (state = { message: null }, action) => {
+export default (state = { message: null }, action: Action) => {
   switch (action.type) {
     case ADD_ERROR:
       return { ...state, message: action.error };

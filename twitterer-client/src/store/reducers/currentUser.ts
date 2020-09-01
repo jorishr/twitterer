@@ -20,10 +20,14 @@ export default (state: State = DEFAULT_STATE, action: Action) => {
     case SET_CURRENT_USER:
       return {
         isAuthenticated: !!Object.keys(action.user).length,
-        //(!!0 -> !true -> false)
-        //isAuthenticated: Object.keys(action.user).length > 0,
-        //turns empty object into false (keys results into arr with length 0 if empty)
         user: action.user
+        /* 
+          (!!0 -> !true -> false)
+          alternatives: 
+            - isAuthenticated: Object.keys(action.user).length > 0
+            - isAuthenticated: Boolean(Object.keys(action.user).length)
+          turns empty object into false (keys results into arr with length 0 if empty)
+        */
       };
     default:
       return state;

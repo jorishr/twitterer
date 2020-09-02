@@ -14,15 +14,29 @@ const defaultUserData: UserData = {
     password:"",
     profileImgUrl: ""
 }
-function AuthForm (props: any){
+
+export function AuthForm (props: any){
     const [ userData, setUserData ] = useState<UserData>(defaultUserData);
     const handleInput = (e: any) => {
         setUserData({...userData, [e.target.name]: e.target.value });
     }
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        //get the type of action to dispatch and pass it to the api call fn
+        //also include the current state of the userData
+        //onAuth returns a promise
+        const authType = props.signup ? 'signup' : 'signin';
+        console.log(props.onAuth)
+        props.onAuth(authType, userData).then(() => {
+                //redirect to other page
+                console.log("Logged in");
+            })
+
+    }
     return (
         <div className="row justify-content-md-center text-center">
             <div className="col-md-6">
-                <form action="" method="post">
+                <form onSubmit={handleSubmit}>
                     <h2>{props.heading}</h2>
                     <label htmlFor="email">Email:</label>
                     <input  type="text" name="email" id="email" 
@@ -46,10 +60,11 @@ function AuthForm (props: any){
                                     onChange={handleInput}/>                            
                         </div>
                     )}
+                    <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        {props.btn}
+                    </button>
                 </form>
             </div>
         </div>
     )
 }
-
-export default AuthForm;

@@ -2,22 +2,25 @@ import React from 'react';
 import { Switch, Route, withRouter, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Homepage from '../components/Homepage';
-import AuthForm from '../components/AuthForm';
+import { AuthForm } from '../components/AuthForm';
+import { authUser } from '../store/actions/auth';
 
 //if user is authenticated display timeline, else show login screen
 //switch for multiple routes
 //on / route we render the Homepage component with props passed to it from the react router
-const Main = (props: Object) => {
+const Main = (props: any) => {
+    const { authUser } = props;
     return (
         <div className="container">
             <Switch>
                 <Route  exact path="/" 
-                        render={ (props: Object) => <Homepage {...props}/> }>
+                        render={ (props: object) => <Homepage {...props}/> }>
                 </Route>
                 <Route  exact path="/signin"
-                        render={ (props: Object) => {
+                        render={ (props: object) => {
                             return (
                                 <AuthForm   {...props} 
+                                            onAuth={authUser}
                                             btn="Log in" 
                                             heading="Welcome back"/>
                             )
@@ -25,10 +28,11 @@ const Main = (props: Object) => {
                 >
                 </Route>
                 <Route  exact path="/signup"
-                        render={ (props: Object) => {
+                        render={ (props: object) => {
                             return (
                                 <AuthForm   {...props} 
                                             signup
+                                            onAuth={authUser}
                                             btn="Sign me up" 
                                             heading="Join Twitterer today."/>
                             )
@@ -51,4 +55,4 @@ function mapStateToProps(state: any){
 //export the withRouter to get the props from the router to the component above
 //the component also will have access to the history object and redirect
 //connect the component to the redux store
-export default withRouter(connect(mapStateToProps, null)(Main))
+export default withRouter(connect(mapStateToProps, { authUser })(Main))

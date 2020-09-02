@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
 
 export interface UserData {
     username: string,
@@ -17,10 +17,10 @@ const defaultUserData: UserData = {
 
 export function AuthForm (props: any){
     const [ userData, setUserData ] = useState<UserData>(defaultUserData);
-    const handleInput = (e: any) => {
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserData({...userData, [e.target.name]: e.target.value });
     }
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //get the type of action to dispatch and pass it to the api call fn
         //also include the current state of the userData

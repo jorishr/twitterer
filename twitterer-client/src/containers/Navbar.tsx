@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../images/warbler-logo.png'
 
-function Navbar(){
+const Navbar: React.FC = () => {
     return (
-        <>
         <nav className="navbar navbar-expand">
             <div className="container-fluid">
                 <div className="navbar-header">
@@ -23,7 +22,6 @@ function Navbar(){
                 </ul>
             </div>
         </nav>
-        </>
     )
 }
 

@@ -9,7 +9,7 @@ import Main from './Main';
 //create the store
 const store = configureStore();
 
-const App = () => (
+const App: React.FC = () => (
   <Provider store={store}>
     <Router>
       <div className="onboarding">

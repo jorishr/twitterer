@@ -5,10 +5,15 @@ import Homepage from '../components/Homepage';
 import { AuthForm } from '../components/AuthForm';
 import { authUser } from '../store/actions/auth';
 
+export interface IProps {
+    authUser: (type: string, userData: object) => Promise<void>
+}
+
 //if user is authenticated display timeline, else show login screen
 //switch for multiple routes
 //on / route we render the Homepage component with props passed to it from the react router
-const Main = (props: any) => {
+
+const Main: React.FC<IProps> = (props) => {
     const { authUser } = props;
     return (
         <div className="container">

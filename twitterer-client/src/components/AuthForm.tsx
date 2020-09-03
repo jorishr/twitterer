@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import jwtDecode from 'jwt-decode';
 
 export interface UserData {
     username: string,
@@ -26,17 +27,37 @@ export function AuthForm (props: any){
         //also include the current state of the userData
         //onAuth returns a promise
         const authType = props.signup ? 'signup' : 'signin';
-        console.log(props.onAuth)
-        props.onAuth(authType, userData).then(() => {
-                //redirect to other page
-                console.log("Logged in");
+        console.log(props)
+        //onAuth fn returns a promise
+        props.onAuth(authType, userData)
+            .then(() => {
+                //redirect to other page using the react router history
+                //push back to home route where timeline will be shown
+                //console.log("Logged in");
+                props.history.push('/');
+            })
+            .catch(() => {
+                return
             })
 
     }
+    //listen for route changes and remove existing error messages
+    props.history.listen(() => {
+        //console.log("route change detected")
+        //console.log(props)
+        props.removeError();
+    })
     return (
         <div className="row justify-content-md-center text-center">
             <div className="col-md-6">
                 <form onSubmit={handleSubmit}>
+                    {/* error reporting */}
+                    {props.errors.message && (
+                        <div className="alert alert-danger">
+                            {props.errors.message}
+                        </div>
+                    )}
+                    {/* base version: login form */}
                     <h2>{props.heading}</h2>
                     <label htmlFor="email">Email:</label>
                     <input  type="text" name="email" id="email" 
@@ -47,6 +68,7 @@ export function AuthForm (props: any){
                     <input  type="password" name="password" id="password" 
                             className="form-control"
                             onChange={handleInput}/>
+                    {/* extended form version: signup fields */}
                     {props.signup && (
                         <div>
                             <label htmlFor="username">Username:</label>

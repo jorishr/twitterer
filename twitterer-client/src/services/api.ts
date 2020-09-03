@@ -19,15 +19,27 @@ export interface IResponse {
     error?: object
 }
 
-export function apiCall (method: string, path: string, data: object){
+export function apiCall (method: string, path: string, data?: object){
     return new Promise((resolve, reject) => {
         return axiosObj[method](path, data)
             .then((res: IResponse) => {
                 return resolve(res.data);
             })
             .catch((err: IResponse) => {
-                return reject(err.error)
+                return reject(err)
             })
     })
 }
 //axios response data always comes back as an object
+
+//function to attach the JWT token to each HTTP request in the http header
+
+export function setTokenHeader(token: string | boolean){
+    if(token){
+        //adjust Axios default obj to add token to all future requests
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;    
+    } else {
+        //if token is no longer present in localStorage, remove from http header
+        delete axios.defaults.headers.common['Authorization'];
+    }
+} 

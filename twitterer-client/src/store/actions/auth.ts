@@ -1,9 +1,16 @@
-import { apiCall } from '../../services/api';
+import { apiCall, setTokenHeader} from '../../services/api';
 import { SET_CURRENT_USER } from '../actionTypes';
+import { addError, removeError } from '../actions/error';
 
+//abstract setTokenHeader fn
+//used in login fn and log out fn
+//see also in App.js for 'hydration' and JWT tampering prevention
+export function setAuthToken(token: string | boolean){
+    setTokenHeader(token);
+}
 
 //action creator function, dispatches and sends user object data to redux reducer
-export function setCurrentUser(user: object){   
+export function setCurrentUser(user: object): object{   
     return {
         type: SET_CURRENT_USER,
         user
@@ -20,11 +27,17 @@ export function authUser(type: string, userData: object){
     return async (dispatch: Function) => {
         try {
             const result: any = await apiCall('post', `/api/auth/${type}`, userData);
-            localStorage.setItem('JwtToken', result.token);
+            setAuthToken(result.token);
+            localStorage.setItem('jwtToken', result.token);
             const {...user} = result;
             dispatch(setCurrentUser(user));
+            //remove previously existing errors
+            dispatch(removeError());
         } catch(err){
-            console.log(err);
+            //if err occurs during auth, dispatch the error
+            //in main.ts these errors are sent to the form via state and props
+            //console.log(err);
+            dispatch(addError(err.message));
         }
     }
 }
@@ -37,9 +50,23 @@ export function authUser(type: string, userData: object){
                     const { token, ...user } = res;
                     localStorage.setItem('JwtToken', token);
                     dispatch(setCurrentUser(user));
+                    //dispatch(removeError());
                     resolve();
                 })
-                .catch();
+                .catch((err) => {
+                    console.log(err)
+                    dispatch(addError(err));
+                    reject();
+                })
         })
     }
 } */
+
+export function logout(){
+    return (dispatch: Function) => {
+        //remove Authentication token from future http headers
+        setAuthToken(false);
+        localStorage.clear();
+        dispatch(setCurrentUser({}))
+    }
+}

@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../images/warbler-logo.png'
+import { IProps } from './Main';
+import { logout } from '../store/actions/auth';
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = (props: any) => {
     return (
         <nav className="navbar navbar-expand">
             <div className="container-fluid">
@@ -12,14 +14,27 @@ const Navbar: React.FC = () => {
                         <img src={logo} alt="Twitterer Home"></img>    
                     </Link>
                 </div>
-                <ul className="nav navbar-nav navbar-right">
-                    <li>
-                        <Link to="/signup">Sign up</Link>
-                    </li>
-                    <li>
-                        <Link to="/signin">Log in</Link>
-                    </li>
-                </ul>
+                {/*show logout/new message links or signin/signup links*/}
+                {props.currentUser.isAuthenticated ? (
+                    <ul className="nav navbar-nav navbar-right">
+                        <li>
+                            <Link to={`/users/${props.currentUser.user.id}/messages/new`}>New message</Link>
+                        </li>
+                        <li>
+                            <a onClick={props.logout}>Logout</a>
+                        </li>
+                    </ul>
+                )
+                : (
+                    <ul className="nav navbar-nav navbar-right">
+                        <li>
+                            <Link to="/signup">Sign up</Link>
+                        </li>
+                        <li>
+                            <Link to="/signin">Log in</Link>
+                        </li>
+                    </ul>
+                )}
             </div>
         </nav>
     )
@@ -34,4 +49,4 @@ function mapStateToProps(state: any){
 
 }
 //connect Navbar component to Redux store
-export default connect(mapStateToProps, null)(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar);

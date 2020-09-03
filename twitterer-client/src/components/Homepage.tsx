@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import MessageTimeline from './MessageTimeline';
+import currentUser from '../store/reducers/currentUser';
 
 //redux state tells us wether user is logged in or not
 //if so, display timeline
@@ -9,7 +10,10 @@ const Homepage: React.FC = (props: any) => {
     if(props.currentUser.isAuthenticated){
         return (
             <div>
-                <MessageTimeline {...props}/>
+                <MessageTimeline 
+                    {...props} 
+                    profileImgUrl={props.currentUser.user.profileImgUrl}
+                    username={props.currentUser.user.username}/>
             </div>
         )
     }

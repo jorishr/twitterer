@@ -9,8 +9,8 @@ const MessageList = (props: any) => {
     //when component mounts, fetch all messages
     const { messages } = props;
     console.log(messages)
-    messages.push({"id":"1", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
-    messages.push({"id":"2", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
+    messages.push({"_id":"1", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
+    messages.push({"_id":"2", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
     let messageList = messages.map((m: any) => (
         <MessageItem 
             key={m._id}

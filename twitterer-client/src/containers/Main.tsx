@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, withRouter, Redirect} from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Homepage from '../components/Homepage';
 import { AuthForm } from '../components/AuthForm';
@@ -8,7 +8,7 @@ import { removeError } from '../store/actions/error';
 import withAuth from '../hocs/withAuth';
 import MessageForm from './MessageForm';
 
-export interface IProps {
+export interface IMainProps {
     authUser: (type: string, userData: object) => Promise<unknown>,
     errors: object,
     removeError: () => object,
@@ -19,7 +19,7 @@ export interface IProps {
 //switch for multiple routes
 //on / route we render the Homepage component with props passed to it from the react router
 
-const Main: React.FC<IProps> = (props) => {
+const Main: React.FC<IMainProps> = (props) => {
     const { authUser, errors, removeError, currentUser } = props;
     return (
         <div className="container">

@@ -1,21 +1,25 @@
 import { SET_CURRENT_USER } from '../actionTypes';
 
-export interface State {
+export interface IUserState {
     isAuthenticated: boolean,
     user: object
 }
 
-export interface Action {
+export interface IUserAction {
     type: string,
     user: object
 }
 
-const DEFAULT_STATE: State = {
-  isAuthenticated: false, // true when logged in
-  user: {} // all the user info when logged in
+const DEFAULT_STATE: IUserState = {
+  isAuthenticated: false, 
+  user: {} 
 };
 
-export default (state: State = DEFAULT_STATE, action: Action) => {
+/*
+SET_CURRENT_USER reducer: 
+populates the state object with user values upon succesfull login
+*/ 
+export default (state: IUserState = DEFAULT_STATE, action: IUserAction): object => {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {

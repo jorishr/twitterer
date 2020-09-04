@@ -12,7 +12,8 @@ export default (state = [], action: any) => {
             //return copy of messge array
             return [...action.messages]
         case REMOVE_MESSAGE:
-            return 'temp'
+            //get all messages and filter out the ones for which id passed does not match current message id
+            return state.filter((message: any) => message._id !== action.id) 
         default:
             return state
     }

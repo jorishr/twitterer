@@ -19,6 +19,9 @@ const MessageItem = (props: any) => (
                     </Moment>
                 </span>
                 <p>{props.text}</p>
+                {props.isCorrectUser && (
+                    <button className="btn btn-danger" onClick={props.deleteMessage}>Remove message</button>
+                )}
             </div>
         </li>
     </div>

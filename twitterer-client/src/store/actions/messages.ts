@@ -9,6 +9,12 @@ export const loadMessages = (messages: any) => ({
     messages
 })
 
+//action creator to delete a message
+export const removeMessage = (id: string) => ({
+    type: REMOVE_MESSAGE,
+    id
+})
+
 //api request to load all messages from db
 export const fetchMessages = () => {
     return (dispatch: Function) => {
@@ -30,3 +36,14 @@ export const postNewMessage = (text: string) => (dispatch: Function, getState: F
         })
         .catch(err => dispatch(addError(err.message)));
 };
+
+//delete message
+export const deleteMessage = (user_id: string, message_id:string) => {
+    return (dispatch: Function) => {
+        return apiCall('delete', `/api/users/${user_id}/messages/${message_id}`)
+            .then(() => {
+                dispatch(removeMessage(message_id));
+            })
+            .catch(err => dispatch(addError(err.message)));
+    }
+}

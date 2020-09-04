@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchMessages } from '../store/actions/messages';
+import { fetchMessages, deleteMessage } from '../store/actions/messages';
 import MessageItem from '../components/MessageItem';
+import currentUser from '../store/reducers/currentUser';
 //to render all message retrieved from databse with Redux and API call
 //related action defined in messages.ts
 
@@ -11,7 +12,7 @@ const MessageList = (props: any) => {
         props.fetchMessages();
     },[])
     console.log("Message List Props", props)
-    const { messages } = props;
+    const { messages, deleteMessage } = props;
     let messageList = messages.map((m: any) => (
         <MessageItem 
             key={m._id}
@@ -19,6 +20,8 @@ const MessageList = (props: any) => {
             text={m.text}
             username={m.user.username}
             profileImgUrl={m.user.profileImgUrl}
+            deleteMessage={deleteMessage.bind({}, m.user._id, m._id)}
+            isCorrectUser={props.currentUser === m.user._id}
         />
     ))
     return (
@@ -34,8 +37,9 @@ const MessageList = (props: any) => {
 
 function mapStateToProps(state: any){
     return {
-        messages: state.messages
+        messages: state.messages,
+        currentUser: state.currentUser.user.id
     }
 }
 
-export default connect(mapStateToProps, { fetchMessages })(MessageList);
+export default connect(mapStateToProps, { fetchMessages, deleteMessage })(MessageList);

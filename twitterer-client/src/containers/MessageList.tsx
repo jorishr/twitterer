@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchMessages } from '../store/actions/messages';
 import MessageItem from '../components/MessageItem';
@@ -7,10 +7,11 @@ import MessageItem from '../components/MessageItem';
 
 const MessageList = (props: any) => {
     //when component mounts, fetch all messages
+    useEffect(() => {
+        props.fetchMessages();
+    },[])
+    console.log("Message List Props", props)
     const { messages } = props;
-    console.log(messages)
-    messages.push({"_id":"1", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
-    messages.push({"_id":"2", "date":"10-12-2020", "text":"hello world", "user": {"username":"joris"}})
     let messageList = messages.map((m: any) => (
         <MessageItem 
             key={m._id}

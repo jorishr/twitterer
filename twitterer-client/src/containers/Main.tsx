@@ -5,6 +5,8 @@ import Homepage from '../components/Homepage';
 import { AuthForm } from '../components/AuthForm';
 import { authUser } from '../store/actions/auth';
 import { removeError } from '../store/actions/error';
+import withAuth from '../hocs/withAuth';
+import MessageForm from './MessageForm';
 
 export interface IProps {
     authUser: (type: string, userData: object) => Promise<unknown>,
@@ -52,6 +54,8 @@ const Main: React.FC<IProps> = (props) => {
                         }}
                 >
                 </Route>
+                {/* Higher order component that only allows signed in users to proceed */}
+                <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
             </Switch>
         </div>
     )

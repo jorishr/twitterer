@@ -12,10 +12,21 @@ export const loadMessages = (messages: any) => ({
 //api request to load all messages from db
 export const fetchMessages = () => {
     return (dispatch: Function) => {
-        return apiCall('GET', '/api/messages')
+        return apiCall('get', '/api/messages')
             .then(res => {
                 dispatch(loadMessages(res));
             })
             .catch(err => addError(err.message));
     }
 }
+
+//post new message
+export const postNewMessage = (text: string) => (dispatch: Function, getState: Function) => {
+    let { currentUser } = getState();
+    const id = currentUser.user.id;
+    return apiCall('post', `/api/users/${id}/messages`, { text })
+        .then(res => {
+            return {}
+        })
+        .catch(err => dispatch(addError(err.message)));
+};
